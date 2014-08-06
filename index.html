@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--Edit the title of the page-->
+    <title>DEIMOS-1 Satellite 5th Anniversary from Elecnor Deimos</title>
+    <meta name="description" content="DEIMOS-1 Satellite 5th Anniversary from Elecnor Deimos">
+    <meta name="author" content="Elcnor Deimos">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="css/light-theme.css">
+    <link rel="stylesheet" href="css/makeitresponsive.css">
+	<link rel="stylesheet" href="css/classic-min.css" type="text/css" />
+	<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+	
+	<style>
+      #slider {
+        margin-top: 40px;
+		margin-left: 20px;
+		margin-right: 20px;
+      }
+	  
+	  h2 
+	  {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	  }
+	  
+	  li
+	  {
+		margin-top: 10px;
+	  }
+
+    </style>
+	
+	<script src="lib/jquery-1.11.1.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="lib/jQDateRangeSlider-min.js"></script>
+	
+  </head>
+  <body>
+
+   <div class="map" id="map">
+		
+   </div>
+	
+    <div class="sidepanel">
+      <div class="wrapper">
+        
+		<div class="context subheader">
+          <img src="img/deimos1-5th.png" alt="DEIMOS-1 Satellite" width="80%"/>
+        </div>
+        <h1>DEIMOS-1 5th Anniversary</h1>
+	
+		<h2>A brief history full of success</h2>
+		<ul>
+			<li>2009: July 29th, DEIMOS-1 was launched and the newcomer <a href="http://www.deimos-imaging.com/">ELECNOR DEIMOS Imaging</a> began operating it from Boecillo, Valladolid, Spain.</li>
+			<li>2010: DEIMOS-1 provided data for <a href="http://due.esrin.esa.int/prjs/prjs134.php">ESA TropForest project</a>, supporting the <a href="http://www.fao.org/forestry/fra/53123/en/">JRC TREES-3 and FAO UN-REDD</a> initiatives.</li>
+			<li>2011: DEIMOS-1 became the main data provider for the USDA in-season crop monitoring of the US, complemented by its twin satellite DMCii's UK-DMC2. This project is still on-going, and in its four years so far has provided an unprecedented 600 million square kilometers of 20 meters multispectral imagery to USDA.</li>
+			<li>2012: DEIMOS-1 became the sole satellite providing the African dataset for <a href="http://www.copernicus.eu/">GMES (now Copernicus)</a> Data Wharehouse for ESA, and started its contribution to the <a href="http://www.ign.es/PNT/">Spanish National Remote Sensing Plan (PNT)</a>, which is still on-going.</li>
+			<li>2013: DEIMOS-1, again in cooperation with UK-DMC2, started an unprecedented service of high-frequency monitoring for precision agriculture, providing one coverage every two days of large regions in the US, across the whole crop season. In September, ELECNOR DEIMOS Imaging was awarded as Best Newcomer Satellite Operator in the Euroconsult Earth Observation Summit held in Paris. </li>
+			<li>2014: Five years after launch, DEIMOS-1 is one of world main data providers for vegetation and resource monitoring projects all around the world, with a still unmatched capacity of frequent monitoring over large areas. The last assessment of the status of the satellite predicts a mission lifetime of at least 10 years.</li>
+		</ul>
+		<p>
+		Now it is time to reach 2019 with the same dedicated service level!
+		</p>
+		<p><b>Congratulations to everyone that makes it possible!</b>
+		</p>
+	   
+
+        <h3>Browse the catalogue </h3>
+		
+		<p>
+		Since its launch, DEIMOS-1 has acquired earth surface snapshots covering 2658 Milions of square kilometers. Select a start and end date and browse the footprints and the previews of the images. 
+		</p>
+		
+		<div class="slider" id="slider"></div>
+		
+        <h3>ABOUT</h3>
+		
+		<p>
+			This visualization is a staff tribute to the DEIMOS-1 5th Anniversary. Is has been developed by the ICT Solutions and Earth Observation teams at <a href="http://www.elecnor-deimos.com">Elecnor Deimos</a> from Tres Cantos, Spain. We have used:
+			<ul>
+				<li><a href="http://cartodb.com/">CartoDB</a> platform, <a href="">templates</a> and <a href="">CartoDB.js</a> Javascript library.</li>
+				<li><a href="http://jquery.com/">jQuery</a> and <a href="http://jqueryui.com/">jQuery UI</a>.</ui>
+				<li><a href="http://ghusse.github.io/jQRangeSlider/">jQuery Range Slider plugin</a>.</li>
+			</ul>	
+		</p>
+		<p>
+			The DEIMOS-1 data has been provided by Deimos Imaging. 
+		</p>
+		
+		<p>
+		You can get more info about Elecnor Deimos at <a href="http://www.elecnor-deimos.com" alt="Elecnor Deimos">http://www.elecnor-deimos.com</a> and following us on <a href="https://twitter.com/deimosimaging">Twitter</a> and <a href="https://www.facebook.com/pages/Deimos-Imaging-SLU/138032652912280?sk=timeline">Facebook</a>. 
+		</p>
+	
+        <div class="context footer">
+          <p>© Elecnor Deimos 2014</p>
+        </div>
+      </div>
+	</div>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&v=3.8"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+
+	
+    <script type="text/javascript">
+      
+
+	  function addDateRangeSlider(sublayer) {
+         var sql = cartodb.SQL({ user: 'dms-coverage' })
+         // fetch time range
+         sql.execute('select max(image_date), min(image_date) from deimos_1_scenes', function(data) {
+           var range = data.rows[0];
+           var max = new Date(range.max)
+           var min = new Date(2009,7,4)
+		   var defaultMin = min
+		   var defaultMax = new Date(min.getFullYear(),min.getMonth()+6,min.getDay());
+		   
+		   console.log("defult: " + defaultMin.toISOString() + ", " + defaultMax.toISOString())
+
+			
+		$("#slider").dateRangeSlider({
+				bounds: {min: min, max: max},
+				defaultValues: {min: defaultMin, max: defaultMax},
+				
+			  });
+		  
+        sublayer.setSQL("select * from deimos_1_scenes where image_date between '" + defaultMin.toISOString() + "' and '" + defaultMax.toISOString() + "'");
+			
+		$("#slider").on("valuesChanged", function(e, data){
+				 
+                var start = new Date(data.values.min);
+                var end = new Date(data.values.max);
+
+				cartodb.log.log(data.values.min);
+				cartodb.log.log(data.values.max);
+				
+			    cartodb.log.log(start,end);
+
+                sublayer.setSQL("select * from deimos_1_scenes where image_date between '" + start.toISOString() + "' and '" + end.toISOString() + "'");
+			});
+         });
+      }
+
+	  
+	  function main() {
+
+          var mapOptions = {
+            zoom: 3,
+            center: new google.maps.LatLng(43, 0),
+            mapTypeId: google.maps.MapTypeId.HYBRID
+          };
+          map = new google.maps.Map(document.getElementById('map'),  mapOptions);
+		  
+        cartodb.createLayer(map, 'http://mobilitydms.cartodb.com/api/v2/viz/ee54e298-1d4d-11e4-b838-0e73339ffa50/viz.json')
+         .addTo(map)
+		 .on('done', function(layer) {
+           addDateRangeSlider(layer.getSubLayer(0));
+		}).on('error', function() {
+          cartodb.log.log("some error occurred");
+        });
+		 
+		 
+      }
+      window.onload = main;
+	  
+    </script>
+	
+	
+	
+
+  </body>
+</html>
